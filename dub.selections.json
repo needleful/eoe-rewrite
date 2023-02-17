@@ -1,0 +1,15 @@
+{
+	"fileVersion": 1,
+	"versions": {
+		"bindbc-loader": "1.0.1",
+		"bindbc-opengl": "1.0.4",
+		"bindbc-sdl": "1.2.4",
+		"derelict-ft": "2.0.0-beta.5",
+		"derelict-util": "3.0.0-beta.2",
+		"freeimage": {"path":"../../../14 Tech and Tools/01 Lantana Engine/repo/modules/FreeImage"},
+		"lantana": {"path":"../../../14 Tech and Tools/01 Lantana Engine/repo"},
+		"sdlang-d": "0.10.6",
+		"taggedalgebraic": "0.11.22",
+		"unit-threaded": "0.7.55"
+	}
+}

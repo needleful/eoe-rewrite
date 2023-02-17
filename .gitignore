@@ -1,0 +1,16 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/end-of-eras
+end-of-eras.so
+end-of-eras.dylib
+end-of-eras.dll
+end-of-eras.a
+end-of-eras.lib
+end-of-eras-test-*
+*.exe
+*.o
+*.obj
+*.lst
+*.pdb
