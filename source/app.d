@@ -1,56 +1,42 @@
 import std.stdio;
 
-import lantana;
-
-enum MAX_MEMORY = 1024*1024*64;
-
-struct triangle {
-	static immutable vec3[3] verts = [
-		vec3(-1,-1, 0),
-		vec3(1, -1, 0),
-		vec3(0, 1, 0)
-	];
-	static immutable Color[3] colors = [
-		Color(255, 0, 0),
-		Color(0, 255, 0),
-		Color(0, 0, 255)
-	];
-
-	static immutable uint[3] indeces = [0, 1, 2];
-}
-
-struct gbuffers {
-	Color gAlbedo;
-}
+import np.dialog;
+import np.dialog.conditions;
 
 void main()
 {
-	Input input;
-	Window window = Window(640, 480, "At the Ends of Eras");
-	window.grabMouse(false);
 
-	Mesh triMesh = Mesh.fromDict({
-		"position": triangle.verts,
-		"color": triangle.colors,
-		"indeces": triangle.indeces
-	});
+	DialogSequence nd;
 
-	DeferredRenderer renderer = DeferredRenderer!gbuffers(window.getSize());
-	WorldMaterial defaultMat = renderer.createMaterial("Default", "data/shaders/static.vert", "data/shaders/flat.frag");
+	nd.items = [
+		1: DialogItem.message("This is the test dialog!"),
+		2: DialogItem.narration("It sucks."),
+		3: DialogItem.branch((auto c) => Result.of(c.talked == 0)),
+		4: DialogItem.message("We've never met before.", "You"),
+		5: DialogItem.branch((auto c) => Result.of(c.otherwise)),
+		6: DialogItem.message("I hate seeing you again", "You")
+	];
+	nd.items[1].next = 2;
+	nd.items[2].next = 3;
+	nd.items[3].withNeighbors(5, 4);
+	nd.items[4].parent = 5;
+	nd.items[5].child = 6;
+	nd.items[6].parent = 5;
 
-	MeshRender triRender = renderer.createRender(triMesh, defaultMat);
 
-	LightRender light = renderer.createLight();
+	writeln("Press ENTER to advance dialog");
 
-	while(!window.state[WindowState.CLOSED]) {
-		window.pollEvents(&input);
+	DialogEvaluator eval;
+	eval.context.talked = 0;
+	eval.start(&nd);
+	DialogItem* currentItem = &nd.items[1];
 
-		window.beginFrame();
-
-		renderer.renderMeshes(defaultMat);
-		renderer.renderLight(light);
-
-		window.endFrame();
+	while(!eval.done()) {
+		DialogItem* c = eval.currentItem;
+		writefln("%s - %s", c.speaker || "Default", c.text);
+		string s;
+		readf("%s\n", &s);
+		eval.advance();
 	}
-	writeln("Exiting...");
+	writeln("--- FIN ---");
 }

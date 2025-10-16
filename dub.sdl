@@ -1,8 +1,5 @@
 name "end-of-eras"
 description "At the Ends of Eras"
 authors "needleful"
-copyright "Copyright © 2023 needleful"
+copyright "Copyright © 2025 needleful"
 license "proprietary"
-
-// lol
-dependency "lantana" path="E:/14 Tech and Tools/01 Lantana Engine/repo"

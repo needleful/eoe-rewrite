@@ -1,0 +1,6 @@
+This is the test dialog!
+* It sucks.
+{talked == 0}
+	You -- We've never met before.
+[otherwise]
+	You -- I hate seeing you again.
